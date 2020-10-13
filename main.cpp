@@ -4,8 +4,8 @@
 
 using namespace std;
 
- void shuffle (char* first, char* last,int tam)
-{
+ void shuffle (char* first, char* last,int tam){
+     
   iterator_traits<char*>::difference_type i, n;
   for (i=tam-1; i>0; --i) {
     swap(first[i],first[rand()%tam]);
@@ -40,9 +40,13 @@ void lerArquivo(){
     }
 }
 
+//implementar o quicksort e o heapsort
+
 int main(int args_tam, char *args[]){
     
-    // Passar para .h depois 
+    //Passar para .h depois 
+    
+    //pegar depois dos arquivos 
     //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
     //categories: lista de ids de categorias de livros (os nomes das categorias estão em categories.csv)
     
