@@ -48,6 +48,104 @@ void lerArquivo(){
     }
 }
 
+void troca(int* a, int* b) // funcao troca para o QS. Necessita da troca por endercos e nao apenas de valores como o swap
+{
+    int t = *a;
+    *a=*b;
+    *b=t;
+}
+
+int particao (int vet[], int inicio, int fim)
+{
+    int meio = (inicio+fim)/2;
+    int m = 0;
+
+    if (vet[inicio]<vet[meio])
+    {
+        if (vet[meio]<vet[fim])
+        {
+            m = meio;
+        }
+        else
+        {
+            if (vet[inicio]<vet[fim])
+            {
+                m = fim;
+            }
+            else
+            {
+                m = inicio;
+            }
+        }
+    }
+    else
+    {
+        if (vet[fim]<vet[meio])
+        {
+            m = meio;
+        }
+        else
+        {
+            if (vet[fim]<vet[inicio])
+            {
+                m = fim;
+            }
+            else
+            {
+                m = inicio;
+            }
+        }
+    }
+    troca(&vet[m],&vet[fim]);
+
+    int pivo = vet[fim];
+    int i=(inicio-1);
+    for (int j = inicio;j<=fim;j++)
+    {
+        if (vet[j]<pivo)
+        {
+            i++;
+            troca(&vet[i],&vet[j]);
+        }
+    }
+    troca(&vet[i+1],&vet[fim]);
+    return (i+1);
+}
+
+void heap_func(int vet[], int tam, int m)
+{
+ 	int maior = m;
+	int esq = 2*m+1;
+	int dir = 2*m+2;
+
+	if (esq<tam && vet[esq]>vet[maior])
+	{
+		maior = esq;
+	}
+
+	if (dir<tam && vet[dir]>vet[maior])
+	{
+		maior = dir;
+	}
+
+	if (maior != m)
+	{
+		swap(vet[m],vet[maior]);
+		heap_func(vet,tam,maior);
+	}
+}
+
+void heapSort(int vet[], int tam)
+{
+	for (int i=tam/2 - 1; i>=0; i--)
+		heap_func(vet,tam,i);
+	for (int i=tam-1; i>=0; i--)
+	{
+		swap(vet[0],vet[i]);
+		heap_func(vet,i,0);
+	}
+}
+
 //implementar o quicksort e o heapsort
 
 int main(int args_tam, char *args[]){
