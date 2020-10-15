@@ -104,6 +104,17 @@ int particao (int vet[], int inicio, int fim)
     return (i+1);
 }
 
+void quickSort(int vet[],int inicio,int fim)
+{
+    if (inicio<fim)
+    {
+
+        int part = particao(vet,inicio,fim);
+        quickSort(vet,inicio,part-1);
+        quickSort(vet,part+1,fim);
+    }
+}
+
 void heap_func(int vet[], int tam, int m)
 {
  	int maior = m;
