@@ -40,6 +40,13 @@ void lerArquivo(){
     }
 }
 
+void troca(int* a, int* b) // funcao troca para o QS. Necessita da troca por endercos e nao apenas de valores como o swap
+{
+    int t = *a;
+    *a=*b;
+    *b=t;
+}
+
 int particao (int vet[], int inicio, int fim)
 {
     int meio = (inicio+fim)/2;
