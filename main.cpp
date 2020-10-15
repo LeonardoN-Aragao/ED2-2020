@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
+#include "Livro.h"
 
 using namespace std;
 
- void shuffle (char* first, char* last,int tam){
+void shuffle (char* first, char* last,int tam){
      
   iterator_traits<char*>::difference_type i, n;
   for (i=tam-1; i>0; --i) {
@@ -24,18 +25,25 @@ void lerArquivo(){
         int tamanho = file.tellg();
         file.seekg (0, file.beg);
 
-        int bloco = tamanho%1000;
+        int bloco = 8192;
         char * buffer = new char [bloco];
 
+        int i = 0;
         while(!file.eof()){
-            file.read(buffer,bloco);
-            //shuffle(buffer,&(buffer[bloco]),bloco);
-            for(int i = 0; i < bloco; i++){
-                cout << buffer[i]; 
+            char * aux;
+            file.read(aux,bloco);
+            
+            sprintf(buffer,"%s%s",buffer,aux);
+
+
+            for(int j = 0; j < bloco; j++){
+                cout << buffer[j];
             }
             cout<<"\n";
+            i++;
+            file.seekg(file.cur-(bloco-i));
         }
-
+        shuffle(buffer,&(buffer[bloco]),bloco);
         file.close();
     }
 }
@@ -43,22 +51,8 @@ void lerArquivo(){
 //implementar o quicksort e o heapsort
 
 int main(int args_tam, char *args[]){
-    
-    //Passar para .h depois 
-    
-    //pegar depois dos arquivos 
-    //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
-    //categories: lista de ids de categorias de livros (os nomes das categorias estão em categories.csv)
-    
-    int id;         //id: id único do livro atribuído pelo Bookdepository.com (int)
-    string title;   //title: título (str)
-    int rank;       //bestsellers-rank: ranking na lista de mais vendidos (int)
-    float rating;   //rating-avg: avaliação média 0-5 <---------------------------------------------------------- ver se é float ou int
-    int count;      //rating-count: número de avaliações
-    string edition; //edition: edição (str)
-    string isbn10;  //isbn10: ISBN-10 (str)
-    string isbn13;  //isbn13: ISBN-13 (str)
 
+    //"authors","bestsellers-rank","categories","description","dimension-x","dimension-y","dimension-z","edition","edition-statement","for-ages","format","id","illustrations-note","imprint","index-date","isbn10","isbn13","lang","publication-date","publication-place","rating-avg","rating-count","title","url","weight"
 
     //Marca tempo total
     clock_t begin, end, total_time;
