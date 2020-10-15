@@ -40,6 +40,40 @@ void lerArquivo(){
     }
 }
 
+void heap_func(int vet[], int tam, int m)
+{
+ int maior = m;
+	int esq = 2*m+1;
+	int dir = 2*m+2;
+
+	if (esq<tam && vet[esq]>vet[maior])
+	{
+		maior = esq;
+	}
+
+	if (dir<tam && vet[dir]>vet[maior])
+	{
+		maior = dir;
+	}
+
+	if (maior != m)
+	{
+		swap(vet[m],vet[maior]);
+		heap_func(vet,tam,maior);
+	}
+}
+
+void heapSort(int vet[], int tam)
+{
+	for (int i=tam/2 - 1; i>=0; i--)
+		heap_func(vet,tam,i);
+	for (int i=tam-1; i>=0; i--)
+	{
+		swap(vet[0],vet[i]);
+		heap_func(vet,i,0);
+	}
+}
+
 //implementar o quicksort e o heapsort
 
 int main(int args_tam, char *args[]){
