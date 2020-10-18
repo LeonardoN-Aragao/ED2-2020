@@ -151,6 +151,7 @@ void heapSort(int vet[], int tam)
 
 //Implementacao dos algoritmos de ordenacao para strings
 void string_troca(string* a, string* b)//Funcao troca adaptada para strings
+{
     string t = *a;
     *a=*b;
     *b=t;
