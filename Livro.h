@@ -1,4 +1,5 @@
 #include <iostream>
+#include "lib.h"
 
 using namespace std;
 
@@ -18,7 +19,8 @@ class Livro{
         string isbn13;       //isbn13: ISBN-13 (str)
 
         //Funções
-        Livro();
+        Livro(){
+        };
         ~Livro();
 
         //Set

@@ -4,6 +4,7 @@
 #include <time.h>
 #include "lib.h"
 #include "Livro.h"
+#include <vector>
 
 using namespace std;
 
@@ -18,6 +19,151 @@ int trocaHS_title = 0;
 int compHS_title = 0;
 double ti = 0;
 double tf = 0;
+vector<Livro*> livros;
+
+void lerArquivo(){
+
+    fstream file;
+    file.open("archive/dataset.csv", fstream::binary | fstream::in);
+
+
+    //"authors","bestsellers-rank","categories","description","dimension-x","dimension-y","dimension-z","edition","edition-statement","for-ages","format","id","illustrations-note","imprint","index-date","isbn10","isbn13","lang","publication-date","publication-place","rating-avg","rating-count","title","url","weight"
+
+    if(file.is_open()){
+
+        // Pega o tamanho do arquivo
+        file.seekg (0, file.end);
+        int tamanho = file.tellg();
+        file.seekg (0, file.beg);
+
+        string data;
+        getline(file,data);
+
+        lib *aux = new lib();
+
+        while(!file.eof()){
+            
+            Livro * p = new Livro();
+            getline(file,data,'[');
+            getline(file,data,']');
+            p->setAuthor(aux->getCod(data,0));
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setRank(stoi(data));
+
+            getline(file,data,'[');
+            getline(file,data,']');
+
+
+            istringstream saux(data);//auxiliar para calcular o tamanho do vetor com os dados recebidos
+            string a;
+
+            int tamanho = 0;
+            while (getline(saux,a,','))//calculando o tamanho do vetor
+                tamanho++;
+
+            p->setCategories(aux->getCod(data,1),tamanho);
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+
+            //para passar da descricao
+            bool verifica = false;
+            string buffer;
+            data = "";
+            while(!verifica){
+
+                getline(file, buffer, '"');
+                data = data + buffer;
+
+                char aux;
+                file.get(aux);
+                if(aux == ','){
+                    file.get(aux);
+                    if(aux == '"')
+                        verifica = true;
+                
+                    else
+                        file.unget();
+                }
+                else
+                    file.unget();
+            }
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            p->setEdition(data);
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setId(stoi(data));
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setIsbn10(data);
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setIsbn13(data);
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setRating(stof(data));
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setCount(stoi(data));
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p->setTitle(data);
+
+            getline(file,data);
+            cout<<endl;
+
+            livros.push_back(p);
+        }
+        //shuffle(comeco,fim,std::default_random_engine(seed));
+        file.close();
+    }
+}
 
 int main(int args_tam, char *args[]){
 
@@ -29,7 +175,6 @@ int main(int args_tam, char *args[]){
     
     //Codigo
     lib a;
-    lerArquivo();
 
     end = clock();
 

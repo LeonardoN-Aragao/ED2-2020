@@ -16,10 +16,16 @@ class lib{
     public:
         dados * autores;
         dados * categorias;
+        int tam_autores;
+        int tam_categorias;
 
         lib(){ //Carrega os arquivos adicionais
-            autores = new dados[50465];
-            categorias = new dados[2540];
+
+            tam_autores = 50465;
+            tam_categorias = 2540;
+
+            autores = new dados[tam_autores];
+            categorias = new dados[tam_categorias];
 
             fstream file;
             file.open("archive/authors.csv", fstream::binary | fstream::in);
@@ -75,187 +81,59 @@ class lib{
             }
         }
 
-};
+        //@data sao os dados recebidos da leitura
+        //@indice pode ser 0 (autor) ou 1 (categorias)
+        string* getCod(string data, int indice) //pega os codigos e poe num vetor. Pode mudar
+        {
+            istringstream saux(data);//auxiliar para calcular o tamanho do vetor com os dados recebidos
+            string aux;
 
-void lerArquivo(){
+            int tamanho = 0;
+            while (getline(saux,aux,','))//calculando o tamanho do vetor
+                tamanho++;
 
-    fstream file;
-    file.open("archive/dataset.csv", fstream::binary | fstream::in);
+            saux.seekg (0, saux.beg);
+            int vetCod[tamanho];
+            string token;
+            int i=0;
 
-
-    //"authors","bestsellers-rank","categories","description","dimension-x","dimension-y","dimension-z","edition","edition-statement","for-ages","format","id","illustrations-note","imprint","index-date","isbn10","isbn13","lang","publication-date","publication-place","rating-avg","rating-count","title","url","weight"
-
-    if(file.is_open()){
-
-        // Pega o tamanho do arquivo
-        file.seekg (0, file.end);
-        int tamanho = file.tellg();
-        file.seekg (0, file.beg);
-
-        string data;
-        getline(file,data);
-
-        while(!file.eof()){
-            
-            getline(file,data,'[');
-            getline(file,data,']');
-            cout<<"autor: "<<data<<endl;
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"rank: "<<data<<endl;
-
-            getline(file,data,'[');
-            getline(file,data,']');
-            cout<<"categorias: "<<data<<endl;
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            bool verifica = false;
-            string buffer;
-            data = "";
-            while(!verifica){
-
-                getline(file, buffer, '"');
-                data = data + buffer;
-
-                char aux;
-                file.get(aux);
-                if(aux == ','){
-                    file.get(aux);
-                    if(aux == '"')
-                        verifica = true;
-                
-                    else
-                        file.unget();
-                }
-                else
-                    file.unget();
+            while (i<tamanho){//quebrando a string pelas virgulas
+                getline(saux,token,',');
+                vetCod[i] = atoi(token.c_str());
+                i++;
             }
 
-            cout<<"descricao: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            cout<<"edicao: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"id: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"isbn10: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"isbn13: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"rating: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"count: "<<data<<endl;
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-            cout<<"titulo: "<<data<<endl;
-
-            getline(file,data);
-            cout<<endl;
+            return converte(vetCod,tamanho,indice);
         }
-        //shuffle(comeco,fim,std::default_random_engine(seed));
-        file.close();
-    }
-}
 
+    private:
+        string auxConverte(int id, int indice){
+            
+            if(indice == 0){
+                for(int i = 0; i<tam_autores ; i ++){
+                    if (autores[i].id == id)
+                        return autores[i].dado;
+                } 
+            }
+            else if(indice == 1){
+                for(int i = 0; i<tam_categorias ; i ++){
+                    if (categorias[i].id == id)
+                        return categorias[i].dado;
+                } 
+            }
 
-string * converte(int * vet, int tam, int indice){ //Converte Id para o nome do authores e categorias 
+        }
+
+        string * converte(int * vet, int tam, int indice){ //Converte Id para o nome do authores e categorias 
     
-    fstream file;
-    dados * aux;
-    if(indice == 0)
-        aux = NULL;
-    else
-        //aux = ;
+            string * resp = new string[tam];
 
-    if(file.is_open()){
-
-        string data;
-        getline(file,data);
-
-        while(!file.eof()){
-
+            for(int i = 0; i<tam ; i ++){
+                resp[i] = auxConverte(vet[i], indice);
+            } 
+            return resp;
         }
-
-        file.close();
-    }
-
-    return 0;
-}
-
-//@data sao os dados recebidos da leitura
-//@indice pode ser 0 (autor) ou 1 (categorias)
-string* getCod(string data, int indice) //pega os codigos e poe num vetor. Pode mudar
-{
-    istringstream saux(data);//auxiliar para calcular o tamanho do vetor com os dados recebidos
-    string aux;
-
-    int tamanho = 0;
-    while (getline(saux,aux,','))//calculando o tamanho do vetor
-        tamanho++;
-
-    saux.seekg (0, saux.beg);
-    int vetCod[tamanho];
-    string token;
-    int i=0;
-
-    while (i<tamanho){//quebrando a string pelas virgulas
-        getline(saux,token,',');
-        vetCod[i] = atoi(token.c_str());
-        i++;
-    }
-
-    return converte(vetCod,tamanho,indice);
-}
+};
 
 void troca(int* a, int* b) // funcao troca para o QS. Necessita da troca por endercos e nao apenas de valores como o swap
 {
