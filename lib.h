@@ -6,6 +6,77 @@
 
 using namespace std;
 
+struct dados{
+    int id;
+    string dado;
+};
+
+class lib{
+
+    public:
+        dados * autores;
+        dados * categorias;
+
+        lib(){ //Carrega os arquivos adicionais
+            autores = new dados[50465];
+            categorias = new dados[2540];
+
+            fstream file;
+            file.open("archive/authors.csv", fstream::binary | fstream::in);
+
+            if(file.is_open()){
+
+                string data;
+                getline(file,data);
+
+                int i = 0;
+                while(!file.eof()){
+                    getline(file,data,'"');
+                    getline(file,data,'"');
+
+                    if(data.empty())
+                        break;
+
+                    autores[i].id = stoi(data);
+
+                    getline(file,data,'"');
+                    getline(file,data);
+                    data.erase(data.length()- 1); //Para tirar a "
+                    autores[i].dado = data;
+                    i++;
+                }
+                file.close();
+            }
+
+            file.open("archive/categories.csv", fstream::binary | fstream::in);
+
+            if(file.is_open()){
+
+                string data;
+                getline(file,data);
+
+                int i = 0;
+                while(!file.eof()){
+                    getline(file,data,'"');
+                    getline(file,data,'"');
+
+                    if(data.empty())
+                        break;
+                        
+                    categorias[i].id = stoi(data);
+
+                    getline(file,data,'"');
+                    getline(file,data);
+                    data.erase(data.length()- 1); //Para tirar a "
+                    categorias[i].dado = data;
+                    i++;
+                }
+                file.close();
+            }
+        }
+
+};
+
 void lerArquivo(){
 
     fstream file;
@@ -134,6 +205,56 @@ void lerArquivo(){
         //shuffle(comeco,fim,std::default_random_engine(seed));
         file.close();
     }
+}
+
+
+string * converte(int * vet, int tam, int indice){ //Converte Id para o nome do authores e categorias 
+    
+    fstream file;
+    dados * aux;
+    if(indice == 0)
+        aux = NULL;
+    else
+        //aux = ;
+
+    if(file.is_open()){
+
+        string data;
+        getline(file,data);
+
+        while(!file.eof()){
+
+        }
+
+        file.close();
+    }
+
+    return 0;
+}
+
+//@data sao os dados recebidos da leitura
+//@indice pode ser 0 (autor) ou 1 (categorias)
+string* getCod(string data, int indice) //pega os codigos e poe num vetor. Pode mudar
+{
+    istringstream saux(data);//auxiliar para calcular o tamanho do vetor com os dados recebidos
+    string aux;
+
+    int tamanho = 0;
+    while (getline(saux,aux,','))//calculando o tamanho do vetor
+        tamanho++;
+
+    saux.seekg (0, saux.beg);
+    int vetCod[tamanho];
+    string token;
+    int i=0;
+
+    while (i<tamanho){//quebrando a string pelas virgulas
+        getline(saux,token,',');
+        vetCod[i] = atoi(token.c_str());
+        i++;
+    }
+
+    return converte(vetCod,tamanho,indice);
 }
 
 void troca(int* a, int* b) // funcao troca para o QS. Necessita da troca por endercos e nao apenas de valores como o swap

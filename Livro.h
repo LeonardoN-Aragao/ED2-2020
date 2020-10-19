@@ -5,7 +5,7 @@ using namespace std;
 class Livro{
     
     public:
-        string author;       //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
+        string * author;       //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
         string * categories; //categories: lista de ids de categorias de livros (os nomes das categorias estão em categories.csv)   
         int tam_categorias;  //quantidade de categorias
         int id;              //id: id único do livro atribuído pelo Bookdepository.com (int)
@@ -22,20 +22,20 @@ class Livro{
         ~Livro();
 
         //Set
-        Livro* setAuthor(string autor){ author = autor; return this;}
-        Livro* setCategories(string * categorias, int tam){ categories = categorias, tam_categorias = tam; return this;}
-        Livro* setId(int numero){ id = numero; return this;}
-        Livro* setTitle(string titulo){ title = titulo; return this;}
-        Livro* setRank(int numero){ rank = numero; return this;}
-        Livro* setRating(float avaliacao){ rating = avaliacao; return this;}
-        Livro* setCount(int numero){ count = numero; return this;}
-        Livro* setEdition(string edicao){ edition = edicao; return this;}
-        Livro* setIsbn10(string isbn){ isbn10 = isbn; return this;}
-        Livro* setIsbn13(string isbn){ isbn13 = isbn; return this;}
+        void setAuthor(string * autor){ author = autor;}
+        void setCategories(string * categorias, int tam){ categories = categorias, tam_categorias = tam;}
+        void setId(int numero){ id = numero;}
+        void setTitle(string titulo){ title = titulo;}
+        void setRank(int numero){ rank = numero;}
+        void setRating(float avaliacao){ rating = avaliacao;}
+        void setCount(int numero){ count = numero;}
+        void setEdition(string edicao){ edition = edicao;}
+        void setIsbn10(string isbn){ isbn10 = isbn;}
+        void setIsbn13(string isbn){ isbn13 = isbn;}
 
         //Get
-        string getAuthor(){ return author;}
-        string* getCategories(){ return categories;}
+        string * getAuthor(){ return author;}
+        string * getCategories(){ return categories;}
         int getId(){ return id;}
         string getTitle(){ return title;}
         int getRank(){ return rank;}
