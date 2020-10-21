@@ -1,3 +1,6 @@
+#ifndef LIB_H
+#define LIB_H
+
 #include <iostream>
 #include <fstream>
 #include <math.h>
@@ -121,7 +124,7 @@ class lib{
                         return categorias[i].dado;
                 } 
             }
-
+            return NULL;
         }
 
         string * converte(int * vet, int tam, int indice){ //Converte Id para o nome do authores e categorias 
@@ -353,3 +356,6 @@ void string_heapSort(string vet[], int tam) //chamada principal do heapsort adap
 		string_heap_func(vet,i,0);
 	}
 }
+
+
+#endif

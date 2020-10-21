@@ -20,8 +20,13 @@ class Livro{
 
         //Funções
         Livro(){
+            author = NULL;
+            categories = NULL;
         };
-        ~Livro();
+        ~Livro(){
+            delete author;
+            delete categories;
+        };
 
         //Set
         void setAuthor(string * autor){ author = autor;}

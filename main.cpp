@@ -19,9 +19,9 @@ int trocaHS_title = 0;
 int compHS_title = 0;
 double ti = 0;
 double tf = 0;
-vector<Livro*> livros;
+Livro * livros;
 
-void lerArquivo(){
+void lerArquivo(int quantidade){
 
     fstream file;
     file.open("archive/dataset.csv", fstream::binary | fstream::in);
@@ -41,17 +41,18 @@ void lerArquivo(){
 
         lib *aux = new lib();
 
-        while(!file.eof()){
+        int i = 0;
+        while(i < quantidade){
             
-            Livro * p = new Livro();
+            Livro p;
             getline(file,data,'[');
             getline(file,data,']');
-            p->setAuthor(aux->getCod(data,0));
+            p.setAuthor(aux->getCod(data,0));
             getline(file,data,'"');
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setRank(stoi(data));
+            p.setRank(atoi(data.c_str()));
 
             getline(file,data,'[');
             getline(file,data,']');
@@ -64,7 +65,7 @@ void lerArquivo(){
             while (getline(saux,a,','))//calculando o tamanho do vetor
                 tamanho++;
 
-            p->setCategories(aux->getCod(data,1),tamanho);
+            p.setCategories(aux->getCod(data,1),tamanho);
             getline(file,data,'"');
 
             getline(file,data,'"');
@@ -102,7 +103,7 @@ void lerArquivo(){
             getline(file,data,'"');
 
             getline(file,data,'"');
-            p->setEdition(data);
+            p.setEdition(data);
 
             getline(file,data,'"');
             getline(file,data,'"');
@@ -115,7 +116,7 @@ void lerArquivo(){
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setId(stoi(data));
+            p.setId(atoi(data.c_str()));
 
             getline(file,data,'"');
             getline(file,data,'"');
@@ -128,124 +129,42 @@ void lerArquivo(){
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setIsbn10(data);
+            p.setIsbn10(data);
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setIsbn13(data);
-
-            getline(file,data,'"');
-            getline(file,data,'"');
-
-            getline(file,data,'"');
-            getline(file,data,'"');
+            p.setIsbn13(data);
 
             getline(file,data,'"');
             getline(file,data,'"');
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setRating(stof(data));
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setCount(stoi(data));
 
             getline(file,data,'"');
             getline(file,data,'"');
-            p->setTitle(data);
+            p.setRating(atof(data.c_str()));
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p.setCount(atoi(data.c_str()));
+
+            getline(file,data,'"');
+            getline(file,data,'"');
+            p.setTitle(data);
 
             getline(file,data);
             cout<<endl;
 
-            livros.push_back(p);
+            livros[i] = p;
+            i++;
         }
         //shuffle(comeco,fim,std::default_random_engine(seed));
         file.close();
     }
-}
-
-int main(int args_tam, char *args[]){
-
-    //"authors","bestsellers-rank","categories","description","dimension-x","dimension-y","dimension-z","edition","edition-statement","for-ages","format","id","illustrations-note","imprint","index-date","isbn10","isbn13","lang","publication-date","publication-place","rating-avg","rating-count","title","url","weight"
-
-    //Marca tempo total
-    clock_t begin, end, total_time;
-    begin = clock();
-    
-    //Codigo
-    lib a;
-
-    end = clock();
-
-    //Salvado dados importantes para relatorio
-
-
-    total_time = (end - begin) / CLOCKS_PER_SEC;
-    cout<< "Tempo total: " << total_time << "\n";
-
-    FILE* saida;
-    saida = fopen("saida.txt","w");
-    if (saida==NULL)
-    {
-        cout<<"\nErro na criacao do arquivo!"<<endl;
-        return 0;
-    }
-    //CODIGO DE LEITURA DO ARQUIVO. Estou suponto que os Livro estejam armazenados em Livro* lib.
-
-    //Variando o indice entre 0 e 1, temos a ordenacao via ID e a ordenacao via titulo
-
-    //Como o tamanho do vetor nao obedece uma logica, eu nao vi outra forma senao essa de implementar. Nao vi como fazer por um loop, uma vez que os saltos sao alternados
-    int tam = 1000;
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(a,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    auxOrdena(a,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    int tam = 5000;
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(a,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    auxOrdena(a,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    int tam = 10000;
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(a,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    auxOrdena(a,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    int tam = 50000;
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(a,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
-    auxOrdena(a,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-    trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
-
-    int tam = 100000;
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-     auxOrdena(a,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
-    auxOrdena(a,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-    trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
-
-    return 0;
 }
 
 
@@ -529,4 +448,92 @@ void auxOrdena (Livro* lib, int indice, int tamanho)
         cout<<"\nCaso default no switch de ordenacao. ERRO!\n"<<endl;
         break;
     }
+}
+
+int main(int args_tam, char *args[]){
+    
+    lib a;
+    FILE* saida;
+    saida = fopen("saida.txt","w");
+    if (saida==NULL)
+    {
+        cout<<"\nErro na criacao do arquivo!"<<endl;
+        return 0;
+    }
+    //CODIGO DE LEITURA DO ARQUIVO. Estou suponto que os Livro estejam armazenados em Livro* lib.
+    
+    //Variando o indice entre 0 e 1, temos a ordenacao via ID e a ordenacao via titulo
+
+    //Como o tamanho do vetor nao obedece uma logica, eu nao vi outra forma senao essa de implementar. Nao vi como fazer por um loop, uma vez que os saltos sao alternados
+    int tam = 1000;
+    livros = new Livro [tam];
+    lerArquivo(tam);
+
+    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    auxOrdena(livros,0,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    auxOrdena(livros,1,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+
+    delete livros;
+    tam = 5000;
+    livros = new Livro [tam];
+    lerArquivo(tam);
+
+    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    auxOrdena(livros,0,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    auxOrdena(livros,1,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+
+    delete livros;
+    tam = 10000;
+    livros = new Livro [tam];
+    lerArquivo(tam);
+
+    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    auxOrdena(livros,0,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    auxOrdena(livros,1,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+
+    delete livros;
+    tam = 50000;
+    livros = new Livro [tam];
+    lerArquivo(tam);
+
+    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    auxOrdena(livros,0,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
+    auxOrdena(livros,1,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+    trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
+
+    delete livros;
+    tam = 100000;
+    livros = new Livro [tam];
+    lerArquivo(tam);
+
+    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    auxOrdena(livros,0,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
+    auxOrdena(livros,1,tam);
+    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
+    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+    trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
+
+    delete livros;
+
+    return 0;
 }
