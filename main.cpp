@@ -1,9 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <time.h>
-#include <random>       // std::default_random_engine
-#include <chrono>       // std::chrono::system_clock
 #include "lib.h"
 #include "Livro.h"
 
@@ -18,8 +15,10 @@ int trocaQS_title = 0;
 int compQS_title = 0;
 int trocaHS_title = 0;
 int compHS_title = 0;
-double ti = 0;
-double tf = 0;
+clock_t tqs_id = 0; //tempo do QS para ID
+clock_t ths_id = 0;// tempo do HS para ID
+clock_t tqs_title = 0; //tempo do QS para title
+clock_t ths_title = 0; //tempo do HS para title
 
 void lerArquivo(Livro * livros, int quantidade){
 
@@ -40,7 +39,7 @@ void lerArquivo(Livro * livros, int quantidade){
         getline(file,data);
 
         lib *aux = new lib();
-
+        cout<<"Lendo arquivo"<<endl;
         int i = 0;
         while(i < quantidade){
             
@@ -157,15 +156,14 @@ void lerArquivo(Livro * livros, int quantidade){
             p.setTitle(data);
 
             getline(file,data);
-            cout<<endl;
 
             livros[i] = p;
             i++;
         }
         file.close();
+        cout<<"Arquivo Lido"<<endl;
     }
 }
-
 
 void Livro_troca(Livro* a, Livro* b)//Funcao troca adaptada para strings. Comum para a ordenacao via id ou titulo
 {
@@ -409,39 +407,51 @@ void livro_heapSort_title(Livro livro[], int tam) //chamada principal do heapsor
 	}
 }
 
+void shuffle(Livro * livros, int tam){
+    int index;
+    Livro temp;
+    srand(time(NULL)*clock());
+    for (int i = tam - 1; i > 0; i--) {
+        index = rand() % tam;
+
+        temp = livros[index];
+        livros[index] = livros[i];
+        livros[i] = temp;
+    }
+}
+
 void auxOrdena (Livro* livro, int indice, int tamanho)
 {
-    double tqs, ths; //VARIAVEIS PARA O CALCULO DE TEMPO GASTO
     //As variaveis de comparacao e troca serao executadas junto com os algoritmos, e sao globais
 
     //Funcao de embaralhar o vetor
+    shuffle(livro,tamanho);
 
-    //unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    //shuffle(livros,livros[quantidade],std::default_random_engine(seed));
+    clock_t ti, tf; 
 
     switch (indice)
     {
     case 0:
-        ti=double(clock());
+        cout<<"ID"<<endl;
+        ti=clock();
         Livro_quickSort_id(livro,0,tamanho-1);//Como a funcao acessa a posicao enviada, @QS.fim = tamanho-1.
-        tf=double(clock());
-        tqs=(tf-ti)/CLOCKS_PER_SEC;
-        ti=double(clock());//POSSO FAZER ASSIM OU TEM DE ZERAR A VARIAVEL?
+        tf=clock();
+        tqs_id=(tf-ti)/1000;
+        ti=clock();//POSSO FAZER ASSIM OU TEM DE ZERAR A VARIAVEL?
         livro_heapSort_id(livro,tamanho);
-        tf=double(clock());
-        ths=(tf-ti)/CLOCKS_PER_SEC;
-        ti=0;tf=0;
+        tf=clock();
+        ths_id=(tf-ti)/1000;
         break;
     case 1:
-        ti=double(clock());
+        cout<<"TITLE"<<endl;
+        ti=clock();
         Livro_quickSort_title(livro,0,tamanho-1);//Como a funcao acessa a posicao enviada, @QS.fim = tamanho-1.
-        tf=double(clock());
-        tqs=(tf-ti)/CLOCKS_PER_SEC;
-        ti=double(clock());//POSSO FAZER ASSIM OU TEM DE ZERAR A VARIAVEL?
+        tf=clock();
+        tqs_title=(tf-ti)/1000;
+        ti=clock();//POSSO FAZER ASSIM OU TEM DE ZERAR A VARIAVEL?
         livro_heapSort_title(livro,tamanho);
-        tf=double(clock());
-        ths=(tf-ti)/CLOCKS_PER_SEC;
-        ti=0;tf=0;
+        tf=clock();
+        ths_title=(tf-ti)/1000;
         break;
     default:
         cout<<"\nCaso default no switch de ordenacao. ERRO!\n"<<endl;
@@ -449,92 +459,56 @@ void auxOrdena (Livro* livro, int indice, int tamanho)
     }
 }
 
-int main(int args_tam, char *args[]){
-    
-    lib a;
-    FILE* saida;
-    saida = fopen("saida.txt","w");
-    if (saida==NULL)
+void exporta(int tam){
+
+    //Variando o indice entre 0 e 1, temos a ordenacao via ID e a ordenacao via titulo
+    fstream saida;
+    saida.open("saida.txt", std::fstream::app);
+    if (!saida.is_open())
     {
         cout<<"\nErro na criacao do arquivo!"<<endl;
-        return 0;
+        return;
     }
-    //CODIGO DE LEITURA DO ARQUIVO. Estou suponto que os Livro estejam armazenados em Livro* lib.
-    
-    //Variando o indice entre 0 e 1, temos a ordenacao via ID e a ordenacao via titulo
 
-    //Como o tamanho do vetor nao obedece uma logica, eu nao vi outra forma senao essa de implementar. Nao vi como fazer por um loop, uma vez que os saltos sao alternados
-    cout<<"Teste" <<endl;
-    int tam = 1000;
     cout<<"Teste "<< tam <<endl;
     Livro * livros = new Livro [tam];
     lerArquivo(livros,tam);
 
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
+    saida << "Iniciando a Ordenacao do vetor de Livro com tamanho igual a: " << tam << endl;
     auxOrdena(livros,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
+    saida << "\nO Metodo QS ordenando conforme o ID dos Livro fez "<< compQS_id<< " comparacoes e " << trocaQS_id << " trocas.\n";
+    saida << "O Tempo gasto foi de: "<<tqs_id << endl;
+    saida << "\nO Metodo HS ordenando conforme o ID dos Livro fez "<< compHS_id<< " comparacoes e " << trocaHS_id << " trocas.\n";
+    saida << "O Tempo gasto foi de: "<<ths_id << endl;
     auxOrdena(livros,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    tam = 5000;
-    cout<<"Teste "<< tam <<endl;
-    livros = new Livro [tam];
-    lerArquivo(livros,tam);
-
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(livros,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    auxOrdena(livros,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    tam = 10000;
-    cout<<"Teste "<< tam <<endl;
-    livros = new Livro [tam];
-    lerArquivo(livros,tam);
-
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(livros,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    auxOrdena(livros,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-
-    tam = 50000;
-    cout<<"Teste "<< tam <<endl;
-    livros = new Livro [tam];
-    lerArquivo(livros,tam);
-
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(livros,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
-    auxOrdena(livros,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
+    saida << "\nO Metodo QS ordenando conforme o titulo dos Livro fez " << compQS_title << " comparacoes e "<< trocaQS_title << " trocas.\n";
+    saida << "O Tempo gasto foi de: "<<tqs_title << endl;
+    saida << "\nO Metodo HS ordenando conforme o titulo dos Livro fez " << compHS_title << " comparacoes e "<< trocaHS_title << " trocas.\n";
+    saida << "O Tempo gasto foi de: "<<ths_title << endl;
     trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
 
-    tam = 100000;
-    cout<<"Teste "<< tam <<endl;
-    livros = new Livro [tam];
-    lerArquivo(livros,tam);
+    saida<<endl;
 
-    fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
-    auxOrdena(livros,0,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compQS_id,trocaQS_id);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o ID dos Livro fez %d comparacoes e %d trocas.\n",compHS_id,trocaHS_id);
-    compHS_id=0;trocaHS_id=0;compQS_id=0;trocaQS_id=0;
-    auxOrdena(livros,1,tam);
-    fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
-    fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
-    trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
+   cout<<"acabou "<< tam <<endl;
 
-    delete livros;
+}
+
+int main(int args_tam, char *args[]){
+
+    if (args_tam = 2){
+
+        string data;
+        fstream file;
+        file.open(args[1]);
+
+        getline(file,data);
+        int tam =  stoi(data);
+
+        for(int i = 0; i<tam; i++){
+            getline(file,data);
+            exporta(stoi(data));
+        }
+    }
 
     return 0;
 }

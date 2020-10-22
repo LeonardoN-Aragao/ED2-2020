@@ -1,0 +1,56 @@
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 1000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 5101 comparacoes e 5101 trocas.
+O Tempo gasto foi de: 0
+
+O Metodo HS ordenando conforme o ID dos Livro fez 12963 comparacoes e 9709 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 5059 comparacoes e 5632 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 992 comparacoes e 1500 trocas.
+O Tempo gasto foi de: 1
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 5000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 40492 comparacoes e 40492 trocas.
+O Tempo gasto foi de: 6
+
+O Metodo HS ordenando conforme o ID dos Livro fez 102981 comparacoes e 75801 trocas.
+O Tempo gasto foi de: 12
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 33632 comparacoes e 36541 trocas.
+O Tempo gasto foi de: 11
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 4945 comparacoes e 7500 trocas.
+O Tempo gasto foi de: 9
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 10000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 120629 comparacoes e 120629 trocas.
+O Tempo gasto foi de: 14
+
+O Metodo HS ordenando conforme o ID dos Livro fez 332523 comparacoes e 241550 trocas.
+O Tempo gasto foi de: 26
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 73187 comparacoes e 78970 trocas.
+O Tempo gasto foi de: 22
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 9908 comparacoes e 15000 trocas.
+O Tempo gasto foi de: 22
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 50000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 561451 comparacoes e 561451 trocas.
+O Tempo gasto foi de: 102
+
+O Metodo HS ordenando conforme o ID dos Livro fez 1508910 comparacoes e 1086378 trocas.
+O Tempo gasto foi de: 147
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 394939 comparacoes e 423964 trocas.
+O Tempo gasto foi de: 151
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 49442 comparacoes e 75000 trocas.
+O Tempo gasto foi de: 106
+

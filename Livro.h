@@ -23,10 +23,7 @@ class Livro{
             author = NULL;
             categories = NULL;
         };
-        ~Livro(){
-            delete [] author;
-            delete [] categories;
-        };
+        virtual ~Livro(){};
 
         //Set
         void setAuthor(string * autor){ author = autor;}
