@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include <math.h>
+#include <algorithm>
 #include <time.h>
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
 #include "lib.h"
 #include "Livro.h"
-#include <vector>
 
 using namespace std;
 
@@ -19,9 +20,8 @@ int trocaHS_title = 0;
 int compHS_title = 0;
 double ti = 0;
 double tf = 0;
-Livro * livros;
 
-void lerArquivo(int quantidade){
+void lerArquivo(Livro * livros, int quantidade){
 
     fstream file;
     file.open("archive/dataset.csv", fstream::binary | fstream::in);
@@ -162,7 +162,6 @@ void lerArquivo(int quantidade){
             livros[i] = p;
             i++;
         }
-        //shuffle(comeco,fim,std::default_random_engine(seed));
         file.close();
     }
 }
@@ -248,7 +247,6 @@ void Livro_quickSort_id(Livro livro[],int inicio,int fim) //chamada principal do
 {
     if (inicio<fim)
     {
-
         int part = LivroParticao_id(livro,inicio,fim);
         Livro_quickSort_id(livro,inicio,part-1);
         Livro_quickSort_id(livro,part+1,fim);
@@ -411,14 +409,15 @@ void livro_heapSort_title(Livro livro[], int tam) //chamada principal do heapsor
 	}
 }
 
-void auxOrdena (Livro* lib, int indice, int tamanho)
+void auxOrdena (Livro* livro, int indice, int tamanho)
 {
     double tqs, ths; //VARIAVEIS PARA O CALCULO DE TEMPO GASTO
     //As variaveis de comparacao e troca serao executadas junto com os algoritmos, e sao globais
 
-    Livro* livro = new Livro[tamanho];
-    //ARMAZENAR OS Livro LIDOS EM UM VETOR DE TAMANHO tamanho;
     //Funcao de embaralhar o vetor
+
+    //unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    //shuffle(livros,livros[quantidade],std::default_random_engine(seed));
 
     switch (indice)
     {
@@ -465,9 +464,11 @@ int main(int args_tam, char *args[]){
     //Variando o indice entre 0 e 1, temos a ordenacao via ID e a ordenacao via titulo
 
     //Como o tamanho do vetor nao obedece uma logica, eu nao vi outra forma senao essa de implementar. Nao vi como fazer por um loop, uma vez que os saltos sao alternados
+    cout<<"Teste" <<endl;
     int tam = 1000;
-    livros = new Livro [tam];
-    lerArquivo(tam);
+    cout<<"Teste "<< tam <<endl;
+    Livro * livros = new Livro [tam];
+    lerArquivo(livros,tam);
 
     fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
     auxOrdena(livros,0,tam);
@@ -477,10 +478,10 @@ int main(int args_tam, char *args[]){
     fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
     fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
 
-    delete livros;
     tam = 5000;
+    cout<<"Teste "<< tam <<endl;
     livros = new Livro [tam];
-    lerArquivo(tam);
+    lerArquivo(livros,tam);
 
     fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
     auxOrdena(livros,0,tam);
@@ -490,10 +491,10 @@ int main(int args_tam, char *args[]){
     fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
     fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
 
-    delete livros;
     tam = 10000;
+    cout<<"Teste "<< tam <<endl;
     livros = new Livro [tam];
-    lerArquivo(tam);
+    lerArquivo(livros,tam);
 
     fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
     auxOrdena(livros,0,tam);
@@ -503,10 +504,10 @@ int main(int args_tam, char *args[]){
     fprintf(saida,"\nO Metodo QS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compQS_title,trocaQS_title);
     fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
 
-    delete livros;
     tam = 50000;
+    cout<<"Teste "<< tam <<endl;
     livros = new Livro [tam];
-    lerArquivo(tam);
+    lerArquivo(livros,tam);
 
     fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
     auxOrdena(livros,0,tam);
@@ -518,10 +519,10 @@ int main(int args_tam, char *args[]){
     fprintf(saida,"\nO Metodo HS ordenando conforme o titulo dos Livro fez %d comparacoes e %d trocas.\n",compHS_title,trocaHS_title);
     trocaHS_title=0,compHS_title=0;trocaQS_title=0;compQS_title=0;
 
-    delete livros;
     tam = 100000;
+    cout<<"Teste "<< tam <<endl;
     livros = new Livro [tam];
-    lerArquivo(tam);
+    lerArquivo(livros,tam);
 
     fprintf(saida,"\nIniciando a Ordenacao do vetor de Livro com tamanho igual a: %d\n",tam);
     auxOrdena(livros,0,tam);

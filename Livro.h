@@ -24,8 +24,8 @@ class Livro{
             categories = NULL;
         };
         ~Livro(){
-            delete author;
-            delete categories;
+            delete [] author;
+            delete [] categories;
         };
 
         //Set
