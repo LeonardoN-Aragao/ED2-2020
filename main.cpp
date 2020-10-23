@@ -501,12 +501,14 @@ int main(int args_tam, char *args[]){
         fstream file;
         file.open(args[1]);
 
-        getline(file,data);
-        int tam =  stoi(data);
-
-        for(int i = 0; i<tam; i++){
+        if(file.is_open()){
             getline(file,data);
-            exporta(stoi(data));
+            int tam =  stoi(data);
+
+            for(int i = 0; i<tam; i++){
+                getline(file,data);
+                exporta(stoi(data));
+            }
         }
     }
 

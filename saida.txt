@@ -54,3 +54,115 @@ O Tempo gasto foi de: 151
 O Metodo HS ordenando conforme o titulo dos Livro fez 49442 comparacoes e 75000 trocas.
 O Tempo gasto foi de: 106
 
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 1000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 5479 comparacoes e 5479 trocas.
+O Tempo gasto foi de: 0
+
+O Metodo HS ordenando conforme o ID dos Livro fez 12963 comparacoes e 9709 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 5125 comparacoes e 5704 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 992 comparacoes e 1500 trocas.
+O Tempo gasto foi de: 1
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 5000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 41200 comparacoes e 41200 trocas.
+O Tempo gasto foi de: 8
+
+O Metodo HS ordenando conforme o ID dos Livro fez 102959 comparacoes e 75796 trocas.
+O Tempo gasto foi de: 13
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 28947 comparacoes e 31861 trocas.
+O Tempo gasto foi de: 11
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 4945 comparacoes e 7500 trocas.
+O Tempo gasto foi de: 7
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 10000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 111436 comparacoes e 111436 trocas.
+O Tempo gasto foi de: 16
+
+O Metodo HS ordenando conforme o ID dos Livro fez 332298 comparacoes e 241349 trocas.
+O Tempo gasto foi de: 24
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 66677 comparacoes e 72474 trocas.
+O Tempo gasto foi de: 23
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 9908 comparacoes e 15000 trocas.
+O Tempo gasto foi de: 15
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 1000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 5132 comparacoes e 5132 trocas.
+O Tempo gasto foi de: 0
+
+O Metodo HS ordenando conforme o ID dos Livro fez 12963 comparacoes e 9709 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 5574 comparacoes e 6156 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 992 comparacoes e 1500 trocas.
+O Tempo gasto foi de: 1
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 1000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 5460 comparacoes e 5460 trocas.
+O Tempo gasto foi de: 0
+
+O Metodo HS ordenando conforme o ID dos Livro fez 12963 comparacoes e 9709 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 5166 comparacoes e 5744 trocas.
+O Tempo gasto foi de: 1
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 992 comparacoes e 1500 trocas.
+O Tempo gasto foi de: 1
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 5000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 40240 comparacoes e 40240 trocas.
+O Tempo gasto foi de: 6
+
+O Metodo HS ordenando conforme o ID dos Livro fez 103016 comparacoes e 75824 trocas.
+O Tempo gasto foi de: 11
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 33622 comparacoes e 36505 trocas.
+O Tempo gasto foi de: 13
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 4945 comparacoes e 7500 trocas.
+O Tempo gasto foi de: 8
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 10000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 114645 comparacoes e 114645 trocas.
+O Tempo gasto foi de: 13
+
+O Metodo HS ordenando conforme o ID dos Livro fez 332384 comparacoes e 241450 trocas.
+O Tempo gasto foi de: 26
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 65165 comparacoes e 70957 trocas.
+O Tempo gasto foi de: 20
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 9908 comparacoes e 15000 trocas.
+O Tempo gasto foi de: 20
+
+Iniciando a Ordenacao do vetor de Livro com tamanho igual a: 50000
+
+O Metodo QS ordenando conforme o ID dos Livro fez 572762 comparacoes e 572762 trocas.
+O Tempo gasto foi de: 115
+
+O Metodo HS ordenando conforme o ID dos Livro fez 1508828 comparacoes e 1086309 trocas.
+O Tempo gasto foi de: 155
+
+O Metodo QS ordenando conforme o titulo dos Livro fez 421921 comparacoes e 450992 trocas.
+O Tempo gasto foi de: 147
+
+O Metodo HS ordenando conforme o titulo dos Livro fez 49442 comparacoes e 75000 trocas.
+O Tempo gasto foi de: 106
+
