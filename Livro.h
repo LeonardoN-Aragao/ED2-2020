@@ -6,13 +6,13 @@ using namespace std;
 class Livro{
     
     public:
-        string * author;       //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
+        string * author;     //authors: lista de ids de autores entre colchetes e separados por vírgulas (os nomes dos autores associados aos ids estão em authors.csv)
         string * categories; //categories: lista de ids de categorias de livros (os nomes das categorias estão em categories.csv)   
         int tam_categorias;  //quantidade de categorias
         int id;              //id: id único do livro atribuído pelo Bookdepository.com (int)
         string title;        //title: título (str)
         int rank;            //bestsellers-rank: ranking na lista de mais vendidos (int)
-        float rating;        //rating-avg: avaliação média 0-5 <---------------------------------------------------------- ver se é float ou int
+        float rating;        //rating-avg: avaliação média 0-5 
         int count;           //rating-count: número de avaliações
         string edition;      //edition: edição (str)
         string isbn10;       //isbn10: ISBN-10 (str)
