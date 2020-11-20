@@ -493,7 +493,85 @@ void exporta(int tam){
 
 }
 
+void menuSelecionado(char a)
+{
+  switch (a){
+
+  case '1':
+  {
+    break;
+  }
+  case '2':
+  {
+    break;
+  }
+  case '3':
+  {
+
+    break;
+  }
+  //---------- Usar para Testes ----------
+  case '4':
+  {
+
+    break;
+  }
+  case 'p':
+  {
+    cout << "Imprimindo" << endl;
+    break;
+  }
+  case 'i':
+  {
+    cout << "Informaçoes do Grafo" << endl;
+    cout << "Numero de Vertices: " << endl;
+    cout << "Numero de Arestas: " << endl;
+    cout << "Numero de Vertices de Grau 0: " << endl;
+    cout << "Maior Grau: " << endl;
+    break;
+  }
+  default:
+    break;
+  }
+}
+
+/* Menu de funcionalidades*/
+void menu()
+{
+  //System("tput reset");
+  char menu;
+  while (true)
+  {
+    cout << endl;
+    cout << "# Menu principal #" << endl;
+    cout << "[1] - Parte 1" << endl;
+    cout << "[2] - Parte 2" << endl;
+    cout << "[3] - Parte 3" << endl;
+    cout << "[4] - Testes" << endl;
+    cout << "[p] - Imprimir" << endl;
+    cout << "[i] - Informaçoes" << endl;
+    cout << "[q] - Sair" << endl;
+    cout << endl;
+    do
+    {
+      cout << "Digite uma opcao do menu: ";
+      cin >> menu;
+    } while (((menu < '0' || menu > '5') && (menu < 'a' || menu > 'z')) && menu != 'q');
+
+    if (menu == 'q')
+    {
+      cout << "Saindo..." << endl;
+      cout << "Bye" << endl;
+      return;
+    }
+    menuSelecionado(menu);
+  }
+}
+
 int main(int args_tam, char *args[]){
+
+    cout << "\nTrabalho Estrutura de Dados 2 - UFJF \n";
+    menu();
 
     if (args_tam = 2){
 
