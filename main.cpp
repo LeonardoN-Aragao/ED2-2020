@@ -592,3 +592,24 @@ int main(int args_tam, char *args[]){
 
     return 0;
 }
+
+/*
+    2 – Implementação dos Autores mais Frequentes
+
+    Você deverá implementar um programa que leia N livros aleatórios e diferentes e conte quantas
+    vezes um mesmo autor se repete dentro desses N livros, ou seja, determinar a quantidade de livros
+    à venda de um determinado autor.
+
+    Você deverá utilizar uma tabela hash para armazenar livros e outra para pesquisar e inserir 
+    os nomes dos autores dos livros. Lembre-se que não deve haver livros repetidos. As funções hash
+    devem apresentar duas propriedades básicas: seu cálculo deve ser rápido e deve gerar poucas 
+    colisões. Além disso, é desejável que ela leve a uma ocupação uniforme da tabela para conjuntos
+    de chaves quaisquer. Escolha um dos métodos estudados para tratar as colisões. 
+
+    Seu programa deve ler cada livro da tabela hash de livros. Cada autor encontrado deve ser armazenado
+    na tabela de autores. No final da execução, seu programa deve imprimir os M (parâmetro definido pelo 
+    usuário) autores mais frequentes. A saída deve ser ordenada de forma decrescente de frequência. Para 
+    ordenação, escolha o algoritmo de ordenação com melhor desempenho na Seção 1. O grupo pode usar a sua
+    criatividade para implementar a tabela de autores, mas será avaliado de  acordo com a qualidade da sua
+    solução.
+*/
